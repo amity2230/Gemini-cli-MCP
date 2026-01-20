@@ -317,16 +317,28 @@ You will need the exact path for the next step.
 ```
 
 ### 8. Finalize
-*   **Windows**: Restart your VS code or commadn prompt
+*   **Windows**: Restart your VS code or commadn prompt.
 *   **macOS**: Restart the VS code or command prompt to reload the configuration.
 
 ---
 
-## 🧪 Testing the Interaction
-Once restarted, you can use Claude to interact with your devices. Try these prompts:
-*   *"Show me the version of the ASR9K device."*
-*   *"List the interfaces on my Linux server."*
-*   *"Check the CPU utilization of the network devices listed in my toml file."*
+## 🧪 Verify the installation of MCP
+* After all the chnages you will see 1 MCP server when you start Gemini again.
+<img width="1771" height="145" alt="image" src="https://github.com/user-attachments/assets/12b2642b-8fe5-4d93-9591-dea85a3ac0fe" />
+
+* You can check MCP related command with `/mcp`.
+<img width="1920" height="382" alt="image" src="https://github.com/user-attachments/assets/e8e6a1d9-8ee9-4c57-853f-7cc454ebb81d" />
+
+## Testing your integration
+* You can start with `/mcp list?`
+  <img width="1938" height="259" alt="image" src="https://github.com/user-attachments/assets/d0e4ab65-68e2-4eb8-bc1d-898480960519" />
+
+* It will show you the list of MCP servers.
+<img width="1991" height="456" alt="image" src="https://github.com/user-attachments/assets/f7b34f79-49b6-4328-901b-6f89ceb88723" />
+
+
+
+
 
 ---
 
