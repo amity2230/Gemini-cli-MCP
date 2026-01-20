@@ -317,8 +317,8 @@ You will need the exact path for the next step.
 ```
 
 ### 8. Finalize
-*   **Windows**: Restart your computer.
-*   **macOS**: Restart the Claude Desktop App to reload the configuration.
+*   **Windows**: Restart your VS code or commadn prompt
+*   **macOS**: Restart the VS code or command prompt to reload the configuration.
 
 ---
 
