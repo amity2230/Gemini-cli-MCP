@@ -248,7 +248,7 @@ You will need the exact path for the next step.
 2.  Go to home directory `cd ~ `.
 3.  Go to the folder `cd .gemini` which should already be present if you have installed Gemini CLI from earlier steps.
 4.  You can open the foldersettings.json in VS code with `code .\settings.json`.
-5.  Add the JSON configuration after whatever present in the settings.json file with new comma. **Replace the bold placeholders** with your actual system username and `uv` path.
+5.  Add the JSON configuration after whatever present in the settings.json file with new comma. **Replace the ** **amit** ** placeholders** with your actual system username and `uv` path.
 
 **Windows Configuration:**
 ```json
@@ -264,7 +264,7 @@ You will need the exact path for the next step.
   },
   "mcpServers": {
     "netmiko server": {
-      "command": "C:/Users/YOUR_USERNAME/.local/bin/uv.exe",
+      "command": "C:/Users/**amit**/.local/bin/uv.exe",
       "args": [
         "run",
         "--python",
@@ -307,7 +307,7 @@ You will need the exact path for the next step.
         "--with",
         "netmiko",
         "--directory",
-        "/Users/YOUR_USERNAME/git/mcp-netmiko-server",
+        "/Users/**amit**/git/mcp-netmiko-server",
         "main.py",
         "my-devices.network.toml"
       ]
@@ -317,7 +317,7 @@ You will need the exact path for the next step.
 ```
 
 ### 8. Finalize
-*   **Windows**: Restart your VS code or commadn prompt.
+*   **Windows**: Restart your VS code or command prompt.
 *   **macOS**: Restart the VS code or command prompt to reload the configuration.
 
 ---
