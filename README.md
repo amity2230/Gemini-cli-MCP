@@ -1,8 +1,13 @@
+
 ***
 
-# Gemini-cli-MCP
+# Gemini CLI & MCP Server Lab
 
 **Gemini CLI MCP server** — A powerful, terminal-first interface for interacting with Google's Gemini models, featuring built-in tools and Model Context Protocol (MCP) support.
+
+This repository guides you through installing the Gemini CLI and configuring a **Network Device MCP Server** (using Netmiko) to bridge the gap between LLMs and physical/virtual network infrastructure.
+
+---
 
 ## 🚀 Why Gemini CLI?
 
@@ -15,11 +20,23 @@
 
 ---
 
-## 📦 Installation
+## 📖 Lab Overview
+
+By the end of this lab, you will understand how to use an **MCP (Model Context Protocol) Server** to connect to Network Devices and interact with them using AI-driven prompts.
+
+### Agenda
+1.  **Gemini CLI Setup**: Install and authenticate the base CLI tool.
+2.  **Environment Setup**: Install dependencies (`uv`, `git`) for the MCP server.
+3.  **Integration**: Connect the Netmiko MCP Server with the Gemini CLI.
+4.  **Validation**: Test the interaction between the LLM and external network devices.
+
+---
+
+## Part 1: Gemini CLI Installation
 
 ### Pre-requisites
-*   **Node.js**: version 20 or higher
-*   **OS**: macOS, Linux, or Windows
+*   **Node.js**: Version 20 or higher ([Download](https://nodejs.org/en/download)).
+*   **OS**: macOS, Linux, or Windows.
 
 ### Quick Install
 Choose one of the following methods:
@@ -39,136 +56,35 @@ npm install -g @google/gemini-cli
 brew install gemini-cli
 ```
 
----
+### Authentication
+Choose the method that fits your needs:
 
-## 🔐 Authentication Options
-
-Choose the authentication method that best fits your needs:
-
-### OPtion 1: Login with Google (OAuth)
-**Best for:** Individual developers and Gemini Code Assist License holders.
-
-*   **Benefits:** Free tier (60 req/min), 1M token context, no API key management.
-*   **Setup:** Simply start the CLI and follow the browser prompt.
-    ```bash
-    gemini
-    ```
-*   *Note: If using a paid Code Assist License, set your project ID:*
-    ```bash
-    export GOOGLE_CLOUD_PROJECT="YOUR_PROJECT_ID"
-    gemini
-    ```
-
-### Option 2: Gemini API Key
-**Best for:** Developers needing specific model control or paid tier access.
-
-*   **Benefits:** 1,000 requests/day, specific model selection, usage-based billing.
-*   **Setup:** Get your key from [Google AI Studio](https://aistudio.google.com/apikey).
-    ```bash
-    export GEMINI_API_KEY="YOUR_API_KEY"
-    gemini
-    ```
-
-### Option 3: Vertex AI
-**Best for:** Enterprise teams and production workloads.
-
-*   **Benefits:** Advanced security, compliance, and higher rate limits.
-*   **Setup:**
-    ```bash
-    export GOOGLE_API_KEY="YOUR_API_KEY"
-    export GOOGLE_GENAI_USE_VERTEXAI=true
-    gemini
-    ```
-
----
-
-## 🚀 Getting Started
-
-### Basic Usage
-Start the CLI in your current directory:
+**Option 1: Login with Google (OAuth) - *Recommended for Individuals***
+Simply start the CLI and follow the browser prompt.
 ```bash
 gemini
 ```
 
-Use a specific model:
+**Option 2: Gemini API Key**
+Get your key from [Google AI Studio](https://aistudio.google.com/apikey).
 ```bash
-gemini -m gemini-2.5-flash
-```
-
-### Quick Examples
-
-**Start a new project:**
-```bash
-cd new-project/
+export GEMINI_API_KEY="YOUR_API_KEY"
 gemini
-```
-
-**Analyze existing code:**
-```bash
-git clone https://github.com/google-gemini/gemini-cli
-cd gemini-cli
-gemini
-# Inside the prompt:
-> Give me a summary of all of the changes that went in yesterday
 ```
 
 ---
 
-
-
-
-
-
-To help you integrate this into your documentation, I have formatted the "MCP Server for Network Engineers" content into a structured Lab Guide format. This can be added as a separate section or a standalone `LAB.md` file.
-
-### Reasoning for the Structure:
-1.  **Lab Overview**: Clearly states the learning objective.
-2.  **Prerequisites**: Ensures the user has the necessary background and tools before starting.
-3.  **Step-by-Step Tasks**: Breaks down the installation and configuration into logical phases.
-4.  **Practical Examples**: Includes sample prompts to help the user immediately test the integration.
-
-***
-
-This is a comprehensive and structured README for your GitHub repository, designed specifically for the **MCP Server for Network Engineers** lab. It follows a logical flow from prerequisites to final configuration.
-
-***
-
-# 🛠️ Lab: MCP Server for Network Engineers
-
-## 📖 Description
-By the end of this lab, students will understand how to use an **MCP (Model Context Protocol) Server** to connect to Network Devices and interact with them using AI-driven prompts. This lab bridges the gap between Large Language Models (LLMs) and physical/virtual network infrastructure.
-
-## 🗓️ Agenda
-1.  **Environment Setup**: Install the MCP client and MCP Server on your local machine.
-2.  **Integration**: Connect the MCP Server with the MCP Client (Gemini CLI).
-3.  **Validation**: Test the interaction between the LLM and external network devices (Linux Server or ASR9K).
-
-## ⚙️ Pre-requisites
-*   **AI Fundamentals**: Basic understanding of Generative AI and Prompt Engineering.
-*   **MCP Knowledge**: Familiarity with the Model Context Protocol concept.
-*   **Technical Skills**: Experience working with the macOS Terminal or Windows Command Prompt.
-*   **Hardware**: A laptop with administrative privileges.
-
----
-
-## 🚀 Step-by-Step Environment Setup
+## Part 2: MCP Server Environment Setup
 
 ### 1. Install Package Managers
-Package managers allow you to easily install and update software from the command line.
-
-*   **Windows (winget):**
-    Ensure `winget` is installed.
-     ```bash
-    https://learn.microsoft.com/en-us/windows/package-manager/winget/
-    ```
-*   **macOS/Linux (Homebrew):**
-    Open your terminal and run:
+*   **Windows:** Ensure `winget` is installed ([Learn more](https://learn.microsoft.com/en-us/windows/package-manager/winget/)).
+*   **macOS/Linux:** Install Homebrew:
     ```bash
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
     ```
 
 ### 2. Install `uv`
-`uv` is an extremely fast Python package and project manager used to run the MCP Server.
+`uv` is a fast Python package manager used to run the MCP Server.
 
 *   **Windows:**
     ```cmd
@@ -188,22 +104,21 @@ Package managers allow you to easily install and update software from the comman
     ```bash
     brew install git
     ```
+
 > [!IMPORTANT]
 > **Restart your terminal** after this step to ensure `uv` and `git` commands are available in your path.
 
-### 4. Install Build Tools
+### 4. Install Build Tools (Windows Only)
 *   **Windows:**
     ```cmd
     winget install -e --id Microsoft.VisualStudio.2022.BuildTools
     ```
-*   **macOS/Linux:**
-    ```bash
-    No action required (built into the OS).
-    ```
 
+---
 
+## Part 3: Configure Netmiko MCP Server
 
-### 5. Configure and Run Netmiko MCP Server
+### 1. Clone and Test Server
 Clone the repository and verify the server can run locally.
 
 **Windows:**
@@ -228,31 +143,30 @@ cd ~/git
 git clone https://github.com/upa/mcp-netmiko-server
 cd mcp-netmiko-server
 
-:: Fetch sample device configuration
+# Fetch sample device configuration
 curl -LJO https://wwwin-github.cisco.com/raw/nipc/CX-Lighhouse-AI-Labs/refs/heads/MCP-Server-for-Network-Engineers/my-devices.network.toml
 
-:: Test the server (Exit with Ctrl+C if a blank screen appears)
+# Test the server (Exit with Ctrl+C if a blank screen appears)
 uv run --python 3.13.9 --with "mcp[cli]" --with netmiko main.py my-devices.network.toml
 ```
 
-### 6. Verify `uv` Path
-You will need the exact path for the next step.
+### 2. Locate `uv` Path
+Run the following to find your path (needed for the next step):
 *   **Windows:** `where uv`
 *   **macOS/Linux:** `which uv`
 
-### 7. The Gemini CLI uses the `mcpServers` configuration in your `settings.json` file to locate and connect to MCP servers. This configuration supports multiple servers with different transport          mechanisms.
-###    You can configure MCP servers in your `settings.json` file in two main ways: through the top-level `mcpServers` object for specific server definitions, and through the `mcp` object for             global settings that control server discovery and execution.
+### 3. Integrate with Gemini CLI
+The Gemini CLI uses `settings.json` to locate MCP servers.
 
-### 7. Integrate with Gemini CLI
-1.  Open terminal
-2.  Go to home directory `cd ~ `.
-3.  Go to the folder `cd .gemini` which should already be present if you have installed Gemini CLI from earlier steps.
-4.  You can open the foldersettings.json in VS code with `code .\settings.json`.
-5.  Add the JSON configuration after whatever present in the settings.json file with new comma. **Replace the ** **amit** ** placeholders** with your actual system username and `uv` path.
+1.  Open your terminal.
+2.  Navigate to the Gemini configuration folder: `cd ~/.gemini` (or `cd %USERPROFILE%\.gemini` on Windows).
+3.  Open `settings.json` (e.g., `code settings.json`).
+4.  Add the `mcpServers` configuration block.
+
+**⚠️ Note:** Add the JSON configuration after whatever present in the settings.json file with new comma. **Replace the ** **amit** ** placeholders** with your actual system username and `uv` path.
 
 **Windows Configuration:**
 ```json
-
 {
   "ide": {
     "hasSeenNudge": true
@@ -285,7 +199,6 @@ You will need the exact path for the next step.
 
 **macOS Configuration:**
 ```json
-
 {
   "ide": {
     "hasSeenNudge": true
@@ -316,30 +229,41 @@ You will need the exact path for the next step.
 }
 ```
 
-### 8. Finalize
-*   **Windows**: Restart your VS code or command prompt.
-*   **macOS**: Restart the VS code or command prompt to reload the configuration.
+### 4. Finalize
+Restart your terminal or VS Code to reload the configuration.
 
 ---
 
-## 🧪 Verify the installation of MCP
-* After all the chnages you will see 1 MCP server when you start Gemini again.
-<img width="1771" height="145" alt="image" src="https://github.com/user-attachments/assets/12b2642b-8fe5-4d93-9591-dea85a3ac0fe" />
+## 🧪 Verification & Testing
 
-* You can check MCP related command with `/mcp`.
-<img width="1920" height="382" alt="image" src="https://github.com/user-attachments/assets/e8e6a1d9-8ee9-4c57-853f-7cc454ebb81d" />
+### Verify MCP Installation
+Start the Gemini CLI. You should see "1 MCP server" listed in the startup logs.
+```bash
+gemini
+```
+*(Example output: `MCP Servers: 1 connected`)*
 
-## Testing your integration
-* You can start with `/mcp list?`
-  <img width="1938" height="259" alt="image" src="https://github.com/user-attachments/assets/d0e4ab65-68e2-4eb8-bc1d-898480960519" />
+### Test Commands
+Inside the Gemini prompt, use the following commands:
 
-* It will show you the list of MCP servers.
-<img width="1991" height="456" alt="image" src="https://github.com/user-attachments/assets/f7b34f79-49b6-4328-901b-6f89ceb88723" />
+1.  **Check MCP status:**
+    ```text
+    /mcp
+    ```
+    <img width="1920" height="382" alt="Screenshot 2026-01-21 003111" src="https://github.com/user-attachments/assets/b9448f3d-dd6c-42cf-a2c8-528a3d6970e5" />
+
+2.  **List available tools:**
+    ```text
+    /mcp list
+    ```
+    *This will display the list of tools provided by the Netmiko server.*
+    <img width="1938" height="259" alt="Screenshot 2026-01-21 003431" src="https://github.com/user-attachments/assets/ff4d4c95-e067-4d0f-ab4c-fe4f60b66f0d" />
+    <img width="1991" height="456" alt="Screenshot 2026-01-21 003511" src="https://github.com/user-attachments/assets/a84396ac-c11b-4299-91dd-9f41def5358d" />
 
 
 
-
-
----
-
+4.  **Interact with the server (Example Prompt):**
+    ```text
+    > Connect to the router defined in my-devices and show me the running configuration.
+    ```  
  
